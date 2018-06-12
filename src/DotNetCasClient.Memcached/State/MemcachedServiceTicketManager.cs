@@ -44,7 +44,7 @@ namespace DotNetCasClient.State
         }
 
         /// <summary>
-        /// Performs initialization of the CacheServiceTicketManager
+        /// Performs initialization of the MemcachedServiceTicketManager
         /// </summary>
         public void Initialize()
         {
