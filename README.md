@@ -14,3 +14,23 @@
 This project is an add-on to the Apereo .NET CAS Client that implements the proxy and service ticket managers backed by a Memcached data store.
 
 By storing your proxy and service tickets in a centralized data store your applications running in a distributed, clustered or load balanced environment will all have access to the same proxy and service ticket data.  This is not possible to achieve with the default in-memory proxy and service ticket managers that ships with the Apereo .NET CAS Client.
+
+## Configuration ##
+
+You will need to make modifications to your application's web.config file after installing this NuGet package.
+
+### First Modification: ###
+
+The first modification will be to add the pertinent Memcached configuration elements.  This project has a dependency on [EnyimMemcached](https://github.com/enyim/EnyimMemcached) in order to integrate with Memcached.  Please see the [EnyimMemcached configuration documentation](https://github.com/enyim/EnyimMemcached/wiki/MemcachedClient-Configuration) with regards to which pertinent elements need to be added to the web.config file.
+
+### Second Modification: ###
+
+The second modification will be to modify the `<casClientConfig>` xml element in your web.config file.  Specifically we will be changing the **proxyTicketManager** *(if you use that)* and the **serviceTicketManager** XML attribute values.
+
+Set the **serviceTicketManager** attribute value to: `DotNetCasClient.State.MemcachedServiceTicketManager, DotNetCasClient.Memcached`
+
+Set the **proxyTicketManager** attribute value to: `DotNetCasClient.State.MemcachedProxyTicketManager, DotNetCasClient.Memcached`
+
+Also, don't forget to wire-up the rest of the [.NET Cas Client configuration](https://github.com/apereo/dotnet-cas-client/wiki/Getting-Started#integration-instructions) too.
+
+After all that configuration you should be good to go!
